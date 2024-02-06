@@ -1,0 +1,249 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	
+    color: rgb(49, 249, 212);
+background-image: url("https://t4.ftcdn.net/jpg/04/09/70/87/360_F_409708782_HxuxOH8f7xSmj5p4ygbAbuJE74vGGj2N.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+
+}
+
+
+.nav-links li a:hover {
+    border: 1px solid white;
+  }
+  .navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  .nav-links li {
+    float: left;
+    width: 20%;
+  }
+  
+  .nav-links li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 0;
+    text-decoration: none;
+  }
+  
+  .nav-links li a.active {
+    background-color: #bdd2e4;
+  }
+
+
+
+#contacts {
+	position: absolute;
+	right: 0;
+	font-size: smaller;
+	margin: 5px;
+	
+}
+
+#contacts label,
+#contacts input[type="text"],
+#contacts input[type="email"] {
+	font-size: smaller;
+	width: 30px;
+	height: 30px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+  
+  
+.product-options {
+	display: none;
+}
+li a:hover {
+    border: 1px solid white;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  li {
+    float: left;
+    width: 20%;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 0;
+    text-decoration: none;
+  }
+  
+  li a.active {
+    background-color: #bdd2e4;
+  }
+  label {
+	display: inline-block;
+	margin-right: 10px; 
+  }
+  
+h1 {
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 3rem;
+	margin-top: 2rem;
+	text-align: center;
+  }
+
+  h5{
+	margin-left: 500px;
+  }
+  .topiainblue {
+    color: rgb(60, 30, 255);
+    border: 4px solid rgb(255, 30, 30);
+    padding: 5px;
+  }
+  
+  .playinred {
+    color: red;
+    border: 4px solid rgb(60, 30, 255);
+    padding: 5px;
+    
+  }
+  
+ 
+  #cart {
+	position: absolute;
+	font-size: 12.5px;
+	top:  235px;
+	right: 20px;
+	margin: 5px;
+	
+	background-color: #111;
+	padding: 0.5px;
+	border: 1px solid purple;
+}
+
+td.quantity {
+	text-align: right;
+  }
+  
+
+  .checkout {
+	float: right;
+  }
+  
+.product-details {
+  background-color: #111;
+	border: 2px solid #5f28f8;
+	font-size: small;
+	padding: 3px;
+	width: calc(70% - 120px); 
+	margin-left: 120px; 
+	margin-top: -293px;
+	color: rgb(237, 237, 237);
+  }
+  .modified-product-details{
+    background-color: #111;
+	border: 2px solid #5f28f8;
+	font-size: small;
+	padding: 3px;
+	width: calc(70% - 120px); 
+	margin-left: 120px; 
+	margin-top: -298px;
+	color: rgb(237, 237, 237);
+
+  }
+ 
+form {
+	width: 10%;
+	height: 30%;
+	margin: 0 auto;
+}
+.GTA-5{
+	margin-top: 180px;
+
+}
+.spiderman-MM{
+	margin-top: 190px;
+}
+.CODMW2{
+	margin-top: 200px;
+}
+.Street-Fighter-6{
+	margin-top: 200px;
+
+
+}
+
+h2 {
+	margin-bottom: 10px;
+    color: rgb(32, 245, 57);
+    border: 4px solid rgb(53, 30, 255);
+    padding: 2px;
+}
+.navbar {
+	background-color: #333;
+	overflow: hidden;
+  }
+  
+  .navbar ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: inline-block;
+	color: aqua;
+  }
+  
+  .nav li {
+	float: left;
+  }
+  
+  .navbar {
+	display: block;
+
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+  }
+  .navbar a {
+	color: rgb(27, 104, 229);
+  }
+  
+  .navbar :hover {
+	background-color: #111;
+  }
+  
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+label[for="quantity"] {
+  margin-bottom: 5px; 
+}
+
+.select {
+  margin-top: -10px; 
+  padding-top: 5px; 
+}
+
+
+
+.consoleselection {
+	width: 160px;
+  }
+  
+  

@@ -1,0 +1,99 @@
+body {
+  background-image: url("https://t4.ftcdn.net/jpg/04/09/70/87/360_F_409708782_HxuxOH8f7xSmj5p4ygbAbuJE74vGGj2N.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+
+
+
+
+h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 3rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 3rem 0;
+  text-align: center;
+}
+
+li {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+
+  .topiainblue {
+    color: rgb(60, 30, 255);
+    border: 4px solid rgb(255, 30, 30);
+    padding: 5px;
+  }
+  
+  .playinred {
+    color: red;
+    border: 4px solid rgb(60, 30, 255);
+
+    padding: 5px;
+    
+  }
+.namesofthestudents {
+  color: rgb(233, 38, 31);
+  padding: 5px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding: 5px;
+}
+
+.loadinscreen {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(37, 58, 253);
+}
+  h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3rem;
+    margin-top: 2rem;
+  }
+  
+  h2 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(37, 58, 253);
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+  
+  ul {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 3rem 0;
+  }
+  
+  li {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+  }
+  
+  

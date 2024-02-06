@@ -1,0 +1,65 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: center; 
+  }
+  
+
+  h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3rem;
+    margin-top: 2rem;
+  }
+  
+
+  .playinred {
+    color: red;
+    border: 4px solid rgb(60, 30, 255);
+    padding: 5px;
+  }
+  
+
+  .topiainblue {
+    color: rgb(60, 30, 255);
+    border: 4px solid rgb(255, 30, 30);
+    padding: 5px;
+  }
+  
+
+  .pageeditor {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: white;
+    max-width: 600px;
+  }
+  
+
+  .pageeditor h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .pageeditor h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .pageeditor p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+
+  .pageeditor a {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+    color: blue;
+    text-decoration: none;
+  }
+  
+  .pageeditor a:hover {
+    text-decoration: underline;
+  }
+  
