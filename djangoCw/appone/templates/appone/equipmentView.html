@@ -90,7 +90,10 @@
             border-collapse: collapse;
             margin-top: 20px;
         }
-
+        .equipmentTable td:nth-child(2) {
+    max-width: 300px; 
+    word-wrap: break-word; /* Force text wrappin so it aint all on 1 line */
+}
         .equipmentTable th,
         .equipmentTable td {
             border: 1px solid #ccc;
@@ -204,7 +207,7 @@
                             <td>{{ item.quantity }}</td>
                             <td>{{ item.onsite }}</td>
                             <td>{{ item.location }}</td>
-                            <td>{{ item.status }}</td>
+                            <td>{{ item.status.status }}</td>
                             <td>
                                 <!-- equipmentView.html -->
 
