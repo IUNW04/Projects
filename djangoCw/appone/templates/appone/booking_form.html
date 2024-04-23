@@ -49,21 +49,19 @@
 </head>
 <body>
     <h1>Book Equipment</h1>
-    <form method="POST" action="{% url 'book_item' %}">
+    <!-- Display messages -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- booking_form.html -->
+    <form method="POST" action="{% url 'book_item' item.id %}">
         {% csrf_token %}
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date">
-        <br>
-        <label for="start_time">Start Time:</label>
-        <input type="time" id="start_time" name="start_time">
-        <br>
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date">
-        <br>
-        <label for="end_time">End Time:</label>
-        <input type="time" id="end_time" name="end_time">
-        <br>
-        <input type="hidden" name="item_id" value="{{ item_id }}">
+        {{ form.as_p }}  <!-- Render form fields -->
         <button type="submit">Book</button>
     </form>
 </body>

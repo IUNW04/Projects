@@ -22,11 +22,17 @@ class Item(models.Model):
     comments = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
    
+class Booking(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    start_time = models.TimeField()
+    end_date = models.DateField()
+    end_time = models.TimeField()
 
-    
+    def __str__(self):
+        return f"Booking for {self.item} by {self.user.username} ({self.start_date} {self.start_time} to {self.end_date} {self.end_time})"
 
-    def _str_(self):
-        return self.name
 
 
 class ItemType(models.Model):

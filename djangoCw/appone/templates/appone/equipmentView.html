@@ -205,7 +205,16 @@
                             <td>{{ item.onsite }}</td>
                             <td>{{ item.location }}</td>
                             <td>{{ item.status }}</td>
-                            <td><a href="#">Book</a></td> <!-- Book button placeholder -->
+                            <td>
+                                <!-- equipmentView.html -->
+
+                                <form method="POST" action="{% url 'book_item' item.id %}">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button type="submit">Book</button>
+                                </form>
+                                
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
