@@ -10,12 +10,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from .models import Booking
+
 from .forms import BookingForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render, redirect
-
-
-
 
 
 
@@ -73,3 +71,39 @@ def book_item(request, item_id):
 def bookings_view(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'appone/bookings.html', {'bookings': bookings})
+
+# path: /Users/imadhuddin/Desktop/djangoCw/appone/views.py
+
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Booking
+
+def historical(request):
+    historical_bookings = Booking.objects.filter(end_date__lt=timezone.now().date())
+    return render(request, 'appone/historical.html', {'historical_bookings': historical_bookings})
+
+
+@login_required
+def rebook(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.item = item
+            booking.user = request.user
+            booking.save()
+            messages.success(request, 'Equipment rebooked successfully!')
+            return redirect('bookings_view')
+        else:
+            # If the form is not valid, display error messages
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    else:
+        form = BookingForm()
+    
+    return render(request, 'appone/booking_form.html', {'form': form, 'item': item})
+
+    
