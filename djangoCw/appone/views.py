@@ -50,10 +50,11 @@ def book_item(request, item_id):
             booking.item = item
             booking.user = request.user
             booking.save()
-            # Convert item.quantity to an integer and then subtract 1
-            item.quantity = int(item.quantity)
-            item.quantity -= 1
-            item.save()  # Save the updated item
+            # Check if item.quantity is not None before converting it to an integer
+            if item.quantity is not None:
+                item.quantity = int(item.quantity)
+                item.quantity -= 1
+                item.save()  # Save the updated item
             messages.success(request, 'Equipment booked successfully!')
             return redirect('bookings_view')
         else:
@@ -67,10 +68,11 @@ def book_item(request, item_id):
 
 
 
+
 @login_required
 def bookings_view(request):
-    bookings = Booking.objects.filter(user=request.user)
-    return render(request, 'appone/bookings.html', {'bookings': bookings})
+    current_bookings = Booking.objects.filter(user=request.user, end_date__gte=timezone.now().date())
+    return render(request, 'appone/bookings.html', {'bookings': current_bookings})
 
 def historical(request):
     historical_bookings = Booking.objects.filter(end_date__lt=timezone.now().date())
@@ -87,6 +89,11 @@ def rebook(request, item_id):
             booking.item = item
             booking.user = request.user
             booking.save()
+            # Check if item.quantity is not None before converting it to an integer
+            if item.quantity is not None:
+                item.quantity = int(item.quantity)
+                item.quantity -= 1
+                item.save()  # Save the updated item
             messages.success(request, 'Equipment rebooked successfully!')
             return redirect('bookings_view')
         else:
@@ -98,7 +105,6 @@ def rebook(request, item_id):
 
     return render(request, 'appone/booking_form.html', {'form': form, 'item': item})
 
-    from django.http import HttpResponseRedirect
 
 
 

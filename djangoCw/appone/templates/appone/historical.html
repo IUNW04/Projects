@@ -100,7 +100,7 @@
     </style>
 </head>
 <body>
-    <a href="{% url 'bookings_view' %}" class="bookings-tab"> Bookings</a>
+    <a href="{% url 'bookings_view' %}" class="bookings-tab"> Current Bookings</a>
     <div class="sidebar">
         <div class="sidebar-logo">
             <!-- Your styled text logo goes here -->
@@ -139,7 +139,16 @@
                     <td>{{ booking.start_time }}</td>
                     <td>{{ booking.end_date }}</td>
                     <td>{{ booking.end_time }}</td>
-                    <td><a href="{% url 'rebook' booking.item.id %}">Rebook</a></td>
+                    <td>
+                        {% if booking.item.quantity != '0' and booking.item.status.status == 'available' %}
+                            <a href="{% url 'rebook' booking.item.id %}">Rebook</a>
+                        {% else %}
+                            <!-- Add any alternative content or styling here if needed -->
+                            <button type="button" disabled>Rebook</button>
+                        {% endif %}
+                    </td>
+                    
+                   
                 </tr>
                 {% endfor %}
             </tbody>
