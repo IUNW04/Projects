@@ -85,15 +85,58 @@
             border-radius: 5px;
         }
 
+        /* Sidebar CSS */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Equipment table */
         .equipmentTable {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         .equipmentTable td:nth-child(2) {
-    max-width: 300px; 
-    word-wrap: break-word; /* Force text wrappin so it aint all on 1 line */
-}
+            max-width: 300px; 
+            word-wrap: break-word;
+        }
+
         .equipmentTable th,
         .equipmentTable td {
             border: 1px solid #ccc;
@@ -102,46 +145,26 @@
         }
 
         .equipmentTable th {
-            background-color: #f2f2f2;
+            background-color: #333;
+            color: #fff;
         }
 
         .equipmentTable tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        /* Styles for messages */
-        .messages {
-            margin: 20px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .info {
-            background-color: #5aaeda;
-            color: #fff;
-        }
-
-        .success {
-            background-color: #2ecc71;
-            color: #fff;
-        }
-
-        .warning {
-            background-color: #f39c12;
-            color: #fff;
-        }
-
-        .error {
-            background-color: #e74c3c;
-            color: #fff;
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
 
-    <div class="nav">
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <!-- Your styled text logo goes here -->
+            <span style="font-size: 24px; font-weight: bold; color: #ff6600;">W</span>
+            <span style="font-size: 24px; font-weight: bold; color: #ffffff;">M</span>
+            <span style="font-size: 24px; font-weight: bold; color: #007bff;">I</span>
+        </div>
         <ul>
-            <li><a href="#">Reservations</a></li> <!-- Updated link to point to the bookings page -->
+            <li><a href="#">Reservations</a></li>
             <li><a href="#">Equipment</a></li>
             <li><a href="#">Account</a></li>
             <li><a href="#">Other Options</a></li>
@@ -152,14 +175,7 @@
 
         <h1>Equipment Inventory</h1>
 
-        <!-- Display messages -->
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
 
         <p id="itemCount">Current Inventory Selection: {{ totalInventory }} items</p>
 
@@ -168,14 +184,14 @@
                 <p><strong>Item Types</strong></p>
                 <a href="{% url 'equipmentView' %}">All</a>
                 {% for itemtype in itemtypes %}
-                    <a href="{% url 'equipmentView' %}?q={{ itemtype.type }}">{{ itemtype.type }}</a>
+                    <a href="{% url 'equipmentView' %}?type={{ itemtype.type }}">{{ itemtype.type }}</a>
                 {% endfor %}
             </div>
             <div class="filterSection">
                 <p><strong>Availability</strong></p>
                 <a href="{% url 'equipmentView' %}">All</a>
                 {% for itemstatus in itemstatus %}
-                    <a href="{% url 'equipmentView' %}?q={{ itemstatus.status }}">{{ itemstatus.status }}</a>
+                    <a href="{% url 'equipmentView' %}?status={{ itemstatus.status }}">{{ itemstatus.status }}</a>
                 {% endfor %}
             </div>
             <div class="filterSection">
@@ -196,7 +212,7 @@
                         <th>Onsite</th>
                         <th>Location</th>
                         <th>Availability</th>
-                        <th>Action</th> <!-- New column for the "Book" button -->
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,22 +225,22 @@
                             <td>{{ item.location }}</td>
                             <td>{{ item.status.status }}</td>
                             <td>
-                                <!-- equipmentView.html -->
-
                                 <form method="POST" action="{% url 'book_item' item.id %}">
                                     {% csrf_token %}
                                     {{ form.as_p }}
-                                    <button type="submit">Book</button>
+                                    <button type="submit" {% if item.quantity == '0' or item.status.status != 'available' %}disabled{% endif %}>Book</button>
+
+
+
+
+
                                 </form>
-                                
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        
-
     </div>
 
 </body>

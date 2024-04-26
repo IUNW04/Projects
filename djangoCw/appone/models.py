@@ -21,6 +21,10 @@ class Item(models.Model):
     description = models.TextField(null=True, blank=True)
     comments = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    
+    def __str__(self):
+        return self.name
    
 class Booking(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -29,6 +33,7 @@ class Booking(models.Model):
     start_time = models.TimeField()
     end_date = models.DateField()
     end_time = models.TimeField()
+    is_overdue = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Booking for {self.item} by {self.user.username} ({self.start_date} {self.start_time} to {self.end_date} {self.end_time})"
@@ -38,11 +43,13 @@ class Booking(models.Model):
 class ItemType(models.Model):
     type = models.CharField(max_length=200)
 
-    def _str_(self):
+    def __str__(self):
         return self.type
 
 class ItemStatus(models.Model):
     status = models.CharField(max_length=100)
 
-    def _str_(self):
+    def __str__(self):
         return self.status
+
+    

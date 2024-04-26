@@ -1,21 +1,10 @@
-
-# path: /Users/imadhuddin/Desktop/djangoCw/appone/views.py
-
-from django.shortcuts import render, redirect
-from django.contrib import messages  
-from .models import Item, ItemType, ItemStatus
-from .forms import CreateItemForm, UpdateItemForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.db.models import Q
+from .models import Item, ItemType, ItemStatus, Booking
+from .forms import BookingForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
-from .models import Booking
-
-from .forms import BookingForm
-from django.shortcuts import render, redirect, get_object_or_404
-from django.shortcuts import render, redirect
-
-
 
 
 def equipmentView(request):
@@ -23,6 +12,10 @@ def equipmentView(request):
     itemstatus = ItemStatus.objects.all()
 
     q = request.GET.get('q') if request.GET.get('q') != None else ""
+    status_filter = request.GET.get('status')
+    type_filter = request.GET.get('type')
+    sort_by = request.GET.get('sort')
+
     items = Item.objects.filter(
         Q(type__type__icontains=q) |
         Q(name__icontains=q) |
@@ -33,14 +26,18 @@ def equipmentView(request):
         Q(location__icontains=q) |
         Q(status__status__icontains=q)
     )
+
+    if status_filter:
+        items = items.filter(status__status=status_filter)
+    if type_filter:
+        items = items.filter(type__type=type_filter)
+    if sort_by:
+        items = items.order_by(sort_by)
+
     totalInventory = items.count()
 
     context = {'items': items, 'itemtypes': itemtypes, 'itemstatus': itemstatus, 'totalInventory': totalInventory}
     return render(request, 'appone/equipmentView.html', context)
-
-
-
-from django.contrib import messages
 
 @login_required
 def book_item(request, item_id):
@@ -53,16 +50,19 @@ def book_item(request, item_id):
             booking.item = item
             booking.user = request.user
             booking.save()
+            # Convert item.quantity to an integer and then subtract 1
+            item.quantity = int(item.quantity)
+            item.quantity -= 1
+            item.save()  # Save the updated item
             messages.success(request, 'Equipment booked successfully!')
             return redirect('bookings_view')
         else:
-            # If the form is not valid, display error messages
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
     else:
         form = BookingForm()
-    
+
     return render(request, 'appone/booking_form.html', {'form': form, 'item': item})
 
 
@@ -72,16 +72,9 @@ def bookings_view(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'appone/bookings.html', {'bookings': bookings})
 
-# path: /Users/imadhuddin/Desktop/djangoCw/appone/views.py
-
-from django.shortcuts import render
-from django.utils import timezone
-from .models import Booking
-
 def historical(request):
     historical_bookings = Booking.objects.filter(end_date__lt=timezone.now().date())
     return render(request, 'appone/historical.html', {'historical_bookings': historical_bookings})
-
 
 @login_required
 def rebook(request, item_id):
@@ -97,13 +90,23 @@ def rebook(request, item_id):
             messages.success(request, 'Equipment rebooked successfully!')
             return redirect('bookings_view')
         else:
-            # If the form is not valid, display error messages
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
     else:
         form = BookingForm()
-    
+
     return render(request, 'appone/booking_form.html', {'form': form, 'item': item})
 
-    
+    from django.http import HttpResponseRedirect
+
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id)
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, 'Booking canceled successfully!')
+        return redirect('bookings_view')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

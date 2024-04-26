@@ -130,6 +130,7 @@
                         <th>Start Time</th>
                         <th>End Date</th>
                         <th>End Time</th>
+                        <th>Cancel</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,6 +142,13 @@
                         <td>{{ booking.start_time }}</td>
                         <td>{{ booking.end_date }}</td>
                         <td>{{ booking.end_time }}</td>
+
+                        <td>
+                            <form action="{% url 'cancel_booking' booking.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">Cancel</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
