@@ -1,100 +1,41 @@
 package restful.DAOS;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import restful.Models.Doctors;
-import restful.Models.IPatient;
 import restful.Models.Patients;
 
-public class DAOPatient implements IPatient {
-    private Map<Integer, Patients> patients = new HashMap<>();
-    private Map<Integer, List<Doctors>> patientDoctorsMap = new HashMap<>();
+@JsonInclude(Include.NON_NULL)
+public class DAOPatient {
+    private static List<Patients> patients = new ArrayList<>();
 
-    public DAOPatient() {
-        initializePatients();
+    static {
+        // Create doctors
+        Doctors doctor1 = new Doctors(101, "Dr. Jeremy", "07444434668", "783 Juniper Street NW1 8HA", "Cardiology", null);
+        Doctors doctor2 = new Doctors(102, "Dr. Raami", "07886578902", "456 holden Street NW1 9BA", "Dermatology", null);
+
+        // Create patients and associate doctors
+        patients.add(new Patients(1, "Mohammed Naahid", "07456785667", "123 Elm St", "Allergic to peanuts", "Stable", List.of(doctor1)));
+        patients.add(new Patients(2, "Zaahir Uddin", "07409895691", "456 Oak St", "Asthma", "Improving", List.of(doctor2)));
+        patients.add(new Patients(3, "Hannah Maddison", "07489701221", "789 Maple St", "Diabetes", "Stable", List.of(doctor1, doctor2)));
+        patients.add(new Patients(4, "Nihan Miah", "07456782232", "101 Pine St", "High blood pressure", "Improving", List.of(doctor1)));
+        patients.add(new Patients(5, "Ashraf Islam", "07456789980", "101 Pine St", "High blood pressure", "Improving", List.of(doctor2)));
     }
 
-    private void initializePatients() {
-        // Initialize patients
-        Patients patient1 = new Patients(1, "Mohammed Naahid", "20", "Male", "07456785667", "123 Elm St", "Allergic to peanuts", "Stable");
-        Patients patient2 = new Patients(2, "Zaahir Uddin", "25", "Male", "07409895691", "456 Oak St", "Asthma", "Improving");
-        Patients patient3 = new Patients(3, "Hannah Maddison", "30", "Female", "07489701221", "789 Maple St", "Diabetes", "Stable");
-        Patients patient4 = new Patients(4, "Nihan Miah", "20", "Male", "07456782232", "101 Pine St", "High blood pressure", "Improving");
-        Patients patient5 = new Patients(5, "Ashraf Islam", "18", "Male", "07456789980", "101 Pine St", "High blood pressure", "Improving");
-        patients.put(1, patient1);
-        patients.put(2, patient2);
-        patients.put(3, patient3);
-        patients.put(4, patient4);
-        patients.put(5, patient5);
+    @JsonInclude(Include.NON_NULL)
+    public static List<Patients> getAllPatients() {
+        return patients;
+    }
 
-        // Sample doctors for patients
-        List<Doctors> doctorsForPatient1 = new ArrayList<>();
-        doctorsForPatient1.add(new Doctors(101, "Dr. Jeremy", "07444434668", "Cardiology", "English, Spanish", "15 Years"));
-         doctorsForPatient1.add(new Doctors(102, "Dr. Raami", "07886578902", "Dermatology", "English, Arabic, French ", "8 Years"));
-        List<Doctors> doctorsForPatient2 = new ArrayList<>();
-        doctorsForPatient2.add(new Doctors(101, "Dr. Jeremy", "07444434668", "Cardiology", "English, Spanish", "15 Years"));
-
-        List<Doctors> doctorsForPatient3 = new ArrayList<>();
-        doctorsForPatient3.add(new Doctors(101, "Dr. Jeremy", "07444434668", "Cardiology", "English, Spanish", "15 Years"));
-
-        List<Doctors> doctorsForPatient4 = new ArrayList<>();
-        doctorsForPatient4.add(new Doctors(102, "Dr. Raami", "07886578902", "Dermatology", "English, Arabic, French ", "8 Years"));
-
-        List<Doctors> doctorsForPatient5 = new ArrayList<>();
-        doctorsForPatient5.add(new Doctors(102, "Dr. Raami", "07886578902", "Dermatology", "English, Arabic, French ", "8 Years"));
-        
-        
-        patientDoctorsMap.put(1, doctorsForPatient1);
-        patientDoctorsMap.put(2, doctorsForPatient2);
-        patientDoctorsMap.put(3, doctorsForPatient3);
-        patientDoctorsMap.put(4, doctorsForPatient4);
-        patientDoctorsMap.put(5, doctorsForPatient5);
-
-        // Assign doctors to patients
-        for (Map.Entry<Integer, Patients> entry : patients.entrySet()) {
-            int patientId = entry.getKey();
-            Patients patient = entry.getValue();
-            List<Doctors> assignedDoctors = patientDoctorsMap.getOrDefault(patientId, new ArrayList<>());
-            patient.setDoctors(assignedDoctors);
+        @JsonInclude(Include.NON_NULL)
+    public static Patients getPatientById(int id) {
+        for (Patients patient : patients) {
+            if (patient.getId() == id) {
+                return patient;
+            }
         }
-    }
-
-    @Override
-    public Patients getPatientById(int id) {
-        return patients.get(id);
-    }
-
-    @Override
-    public List<Patients> getAllPatients() {
-        return new ArrayList<>(patients.values());
-    }
-
-    @Override
-    public void addPatient(Patients patient) {
-        patients.put(patient.getId(), patient);
-        patientDoctorsMap.put(patient.getId(), new ArrayList<>());
-    }
-
-    @Override
-    public void updatePatient(Patients patient) {
-        patients.put(patient.getId(), patient);
-    }
-
-    @Override
-    public void deletePatient(int id) {
-        patients.remove(id);
-        patientDoctorsMap.remove(id);
-    }
-
-    public void addDoctorToPatient(int patientId, Doctors doctor) {
-        if (patients.containsKey(patientId)) {
-            patientDoctorsMap.get(patientId).add(doctor);
-        }
-    }
-
-    public List<Doctors> getDoctorsForPatient(int patientId) {
-        return patientDoctorsMap.getOrDefault(patientId, new ArrayList<>());
+        return null;
     }
 }

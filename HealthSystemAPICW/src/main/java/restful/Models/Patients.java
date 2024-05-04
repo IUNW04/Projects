@@ -4,32 +4,26 @@
  */
 package restful.Models;
 
-/**
- *
- * @author imadhuddin
- */
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Patients extends Persons {
     private String medicalHistory;
     private String currentHealthStatus;
     private List<Doctors> doctors;
 
-    public Patients() {
-    }
-
-    public Patients(int id, String name,String age, String gender, String contactInformation, String address, String medicalHistory, String currentHealthStatus) {
-        super(id, name, contactInformation, address);
+    public Patients(int id, String name, String contactInformation, String address, String medicalHistory, String currentHealthStatus, List<Doctors> doctors) {
+        this.setId(id);
+        this.setName(name);
+        this.setContactInformation(contactInformation);
+        this.setAddress(address);
         this.medicalHistory = medicalHistory;
         this.currentHealthStatus = currentHealthStatus;
+        this.doctors = doctors;
     }
-    
-        public Patients(int id, String name, String contactInformation, String age, String gender ) {
-        super(id, name, contactInformation, age, gender);
-    }
-    
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getMedicalHistory() {
         return medicalHistory;
     }
@@ -37,7 +31,8 @@ public class Patients extends Persons {
     public void setMedicalHistory(String medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getCurrentHealthStatus() {
         return currentHealthStatus;
     }
@@ -45,7 +40,8 @@ public class Patients extends Persons {
     public void setCurrentHealthStatus(String currentHealthStatus) {
         this.currentHealthStatus = currentHealthStatus;
     }
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
+        @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<Doctors> getDoctors() {
         return doctors;
     }
@@ -54,4 +50,3 @@ public class Patients extends Persons {
         this.doctors = doctors;
     }
 }
-

@@ -1,85 +1,62 @@
 package restful.DAOS;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import restful.Models.Doctors;
-import restful.Models.IDoctorDataAccess;
 import restful.Models.Patients;
 
-public class DoctorDataAccessImpl implements IDoctorDataAccess {
-    private Map<Integer, Doctors> doctors = new HashMap<>();
-    private Map<Integer, List<Patients>> doctorPatientsMap = new HashMap<>();
+@JsonInclude(Include.NON_NULL)
+public class DAODoctor {
+    private static List<Doctors> doctors = new ArrayList<>();
 
-    public DoctorDataAccessImpl() {
-        initializeDoctors();
+    static {
+        Doctors doctor1 = new Doctors(101, "Dr. Jeremy", "07444434668", "783 Juniper Street NW1 8HA", "Cardiology", null);
+        Doctors doctor2 = new Doctors(102, "Dr. Raami", "07886578902", "456 holden Street NW1 9BA", "Dermatology", null);
+
+        // Associate patients with doctors
+        doctor1.setPatients(getPatientsForDoctor(101));
+        doctor2.setPatients(getPatientsForDoctor(102));
+
+        doctors.add(doctor1);
+        doctors.add(doctor2);
     }
 
-    private void initializeDoctors() {
-        // Initialize doctors
-        Doctors doctor1 = new Doctors(101, "Dr. Jeremy", "55","Male", "07444434668", "783 Juniper Street NW1 8HA", "Cardiology", "English, Spanish", "15 Years");
-        Doctors doctor2 = new Doctors(102, "Dr. Raami", "35","Male", "07886578902", "456 holden Street NW1 9BA", "Dermatology", "English, Arabic, French ", "8 Years");
+        @JsonInclude(Include.NON_NULL)
+    public static List<Doctors> getDoctors() {
+        return doctors;
+    }
 
-        doctors.put(101, doctor1);
-        doctors.put(102, doctor2);
-
-        // Sample patients for doctors
-        List<Patients> patientsForDoctor1 = new ArrayList<>();
-        patientsForDoctor1.add(new Patients(1, "Mohammed Naahid", "20", "Male", "07456785667"));
-        patientsForDoctor1.add(new Patients(2, "Zaahir Uddin", "25", "Male", "07409895691"));
-        patientsForDoctor1.add(new Patients(3, "Hannah Maddison", "30", "Female", "07489701221"));
-        
-        List<Patients> patientsForDoctor2 = new ArrayList<>();
-        patientsForDoctor2.add(new Patients(4, "Nihan Miah", "20", "Male", "07456782232"));
-        patientsForDoctor2.add(new Patients(5, "Ashraf Islam", "18", "Male", "07456789980"));
-
-        doctorPatientsMap.put(101, patientsForDoctor1);
-        doctorPatientsMap.put(102, patientsForDoctor2);
-
-        // Assign patients to doctors
-        for (Map.Entry<Integer, Doctors> entry : doctors.entrySet()) {
-            int doctorId = entry.getKey();
-            Doctors doctor = entry.getValue();
-            List<Patients> assignedPatients = doctorPatientsMap.getOrDefault(doctorId, new ArrayList<>());
-            doctor.setPatients(assignedPatients);
+        @JsonInclude(Include.NON_NULL)
+    public static Doctors getDoctorById(int id) {
+        for (Doctors doctor : doctors) {
+            if (doctor.getId() == id) {
+                return doctor;
+            }
         }
+        return null;
     }
 
-    @Override
-    public Doctors getDoctorById(int id) {
-        return doctors.get(id);
-    }
-
-    @Override
-    public List<Doctors> getAllDoctors() {
-        return new ArrayList<>(doctors.values());
-    }
-
-    @Override
-    public void addDoctor(Doctors doctor) {
-        doctors.put(doctor.getId(), doctor);
-        doctorPatientsMap.put(doctor.getId(), new ArrayList<>());
-    }
-
-    @Override
-    public void updateDoctor(Doctors doctor) {
-        doctors.put(doctor.getId(), doctor);
-    }
-
-    @Override
-    public void deleteDoctor(int id) {
-        doctors.remove(id);
-        doctorPatientsMap.remove(id);
-    }
-
-    public void addPatientToDoctor(int doctorId, Patients patient) {
-        if (doctors.containsKey(doctorId)) {
-            doctorPatientsMap.get(doctorId).add(patient);
+    private static List<Patients> getPatientsForDoctor(int doctorId) {
+        List<Patients> patientsForDoctor = new ArrayList<>();
+        for (Patients patient : DAOPatient.getAllPatients()) {
+            for (Doctors doctor : patient.getDoctors()) {
+                if (doctor.getId() == doctorId) {
+                    // Create a simplified patient object with only necessary details
+                    Patients simplifiedPatient = new Patients(
+                        patient.getId(),
+                        patient.getName(),
+                        patient.getContactInformation(),
+                        patient.getAddress(),
+                        patient.getMedicalHistory(),
+                        patient.getCurrentHealthStatus(),
+                        null  // Avoid circular reference by setting doctors to null
+                    );
+                    patientsForDoctor.add(simplifiedPatient);
+                }
+            }
         }
-    }
-
-    public List<Patients> getPatientsForDoctor(int doctorId) {
-        return doctorPatientsMap.getOrDefault(doctorId, new ArrayList<>());
+        return patientsForDoctor;
     }
 }
