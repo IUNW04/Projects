@@ -4,6 +4,7 @@
  */
 package restful.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
@@ -13,9 +14,16 @@ public class Patients extends Persons {
     private String currentHealthStatus;
     private List<Doctors> doctors;
 
-    public Patients(int id, String name, String contactInformation, String address, String medicalHistory, String currentHealthStatus, List<Doctors> doctors) {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+     public Patients() {
+         
+    }
+
+   
+    public Patients(int id, String name, String age, String contactInformation, String address, String medicalHistory, String currentHealthStatus, List<Doctors> doctors) {
         this.setId(id);
         this.setName(name);
+        this.setAge(age);
         this.setContactInformation(contactInformation);
         this.setAddress(address);
         this.medicalHistory = medicalHistory;

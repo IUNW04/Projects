@@ -8,6 +8,7 @@ import restful.Models.Patients;
 
 @Path("/patients")
 public class PatientRestService {
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Patients> getAllPatients() {
@@ -15,9 +16,32 @@ public class PatientRestService {
     }
 
     @GET
-    @Path("/{patientId}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Patients getPatientById(@PathParam("patientId") int patientId) {
-        return DAOPatient.getPatientById(patientId);
+    public Patients getPatientById(@PathParam("id") int id) {
+        return DAOPatient.getPatientById(id);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addPatient(Patients patient) {
+        DAOPatient.addPatient(patient);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updatePatient(@PathParam("id") int id, Patients updatedPatient) {
+        Patients existingPatient = DAOPatient.getPatientById(id);
+        if (existingPatient != null) {
+            updatedPatient.setId(id);
+            DAOPatient.updatePatient(updatedPatient);
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deletePatient(@PathParam("id") int id) {
+        DAOPatient.deletePatient(id);
     }
 }
