@@ -1,10 +1,13 @@
 package restful.Resources;
+import java.util.ArrayList;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import restful.DAOS.DAODoctor;
+import restful.DAOS.DAOPatient;
 
 import restful.Models.Doctors;
+import restful.Models.Patients;
 
 @Path("/doctors")
 public class DoctorRestService {
@@ -39,5 +42,17 @@ public class DoctorRestService {
     @Path("/{doctorId}")
     public void deleteDoctor(@PathParam("doctorId") int doctorId) {
         DAODoctor.deleteDoctor(doctorId);
+    }
+@GET
+    @Path("/patients/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Doctors> getDoctorsByPatientId(@PathParam("id") int patientId) {
+        List<Doctors> doctorsForPatient = new ArrayList<>();
+        Patients patient = DAOPatient.getPatientById(patientId);
+        if (patient != null) {
+            List<Doctors> doctors = patient.getDoctors();
+            doctorsForPatient.addAll(doctors);
+        }
+        return doctorsForPatient;
     }
 }

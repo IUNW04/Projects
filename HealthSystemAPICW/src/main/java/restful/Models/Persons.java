@@ -17,6 +17,7 @@ public class Persons {
     private String contactInformation;
     private String address;
     private String age;
+    private String gender;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public int getId() {
         return id;
@@ -56,6 +57,14 @@ public class Persons {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     

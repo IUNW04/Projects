@@ -4,9 +4,10 @@ package restful.Models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
-
+//so that "null" isnt shown in json output when i simplify details 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "id", "name", "age", "contactInformation", "address", "specialization", "languages", "experience", "patients" })
+@JsonPropertyOrder({ "id", "name", "age", "gender", "contactInformation", "address", "specialization", "languages", "experience", "patients" })
+//Having to set he order manually because for some reason specialization and languages come after the doctors patients in the json output
 public class Doctors extends Persons {
     private String specialization;
     private String languages;
@@ -20,12 +21,13 @@ public class Doctors extends Persons {
 
     
 
-    public Doctors(int id, String name, String age, String contactInformation, String address, String specialization, String languages, String experience, List<Patients> patients) {
+    public Doctors(int id, String name, String age,  String gender, String contactInformation, String address, String specialization, String languages, String experience, List<Patients> patients) {
         this.setId(id);
         this.setName(name);
         this.setAge(age);
         this.setContactInformation(contactInformation);
         this.setAddress(address);
+        this.setGender(gender);
         this.specialization = specialization;
         this.languages = languages;
         this.experience = experience;

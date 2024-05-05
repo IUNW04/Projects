@@ -12,14 +12,15 @@ public class DAODoctor {
     private static List<Doctors> doctors = new ArrayList<>();
 
     static {
-        Doctors doctor1 = new Doctors(101, "Dr. Jeremy", "55", "07444434668", "783 Juniper Street NW1 8HA", "Cardiology", "English, French, Arabic", "10 years", null);
-        Doctors doctor2 = new Doctors(102, "Dr. Raami", "50", "07886578902", "456 holden Street NW1 9BA", "Dermatology", "English, Spanish", "5 years", null);
-        // Associate patients with doctors
+        Doctors doctor1 = new Doctors(101, "Dr. Jeremy", "55","Male", "07444434668", "783 Juniper Street NW1 8HA", "Cardiology", "English, French, Arabic", "10 years", null);
+        Doctors doctor2 = new Doctors(102, "Dr. Raami", "50","Male", "07886578902", "456 holden Street NW1 9BA", "Dermatology", "English, Spanish", "5 years", null);
+        Doctors doctor3 = new Doctors(103, "Dr. Lilly", "37","Female", "07997571252", "456 Cmden Street NW1 8JA", "Physiotherapy", "English, German", "4 years", null);
         doctor1.setPatients(getPatientsForDoctor(101));
         doctor2.setPatients(getPatientsForDoctor(102));
-
+        doctor3.setPatients(getPatientsForDoctor(103));
         doctors.add(doctor1);
         doctors.add(doctor2);
+        doctors.add(doctor3);
     }
 
     public static List<Doctors> getAllDoctors() {
@@ -52,21 +53,23 @@ public class DAODoctor {
         doctors.removeIf(doctor -> doctor.getId() == id);
     }
 
-    private static List<Patients> getPatientsForDoctor(int doctorId) {
+    public static List<Patients> getPatientsForDoctor(int doctorId) {
         List<Patients> patientsForDoctor = new ArrayList<>();
         for (Patients patient : DAOPatient.getAllPatients()) {
             for (Doctors doctor : patient.getDoctors()) {
                 if (doctor.getId() == doctorId) {
-                    // Create a simplified patient object with only necessary details
+                    
                     Patients simplifiedPatient = new Patients(
                             patient.getId(),
                             patient.getName(),
+                            null,
                             null,
                             patient.getContactInformation(),
                             null,
                             patient.getMedicalHistory(),
                             patient.getCurrentHealthStatus(),
-                            null  
+                            null,
+                            null
                     );
                     patientsForDoctor.add(simplifiedPatient);
                 }

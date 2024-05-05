@@ -3,6 +3,7 @@ package restful.Resources;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import restful.DAOS.DAODoctor;
 import restful.DAOS.DAOPatient;
 import restful.Models.Patients;
 
@@ -43,5 +44,13 @@ public class PatientRestService {
     @Path("/{id}")
     public void deletePatient(@PathParam("id") int id) {
         DAOPatient.deletePatient(id);
+    }
+    
+    
+    @GET
+    @Path("/doctors/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Patients> getPatientsByDoctorId(@PathParam("id") int doctorId) {
+        return DAODoctor.getPatientsForDoctor(doctorId);
     }
 }
