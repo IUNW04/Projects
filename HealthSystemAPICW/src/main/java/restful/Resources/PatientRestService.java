@@ -53,4 +53,6 @@ public class PatientRestService {
     public List<Patients> getPatientsByDoctorId(@PathParam("id") int doctorId) {
         return DAODoctor.getPatientsForDoctor(doctorId);
     }
+    
+    
 }

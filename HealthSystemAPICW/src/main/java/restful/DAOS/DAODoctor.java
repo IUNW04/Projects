@@ -52,14 +52,29 @@ public class DAODoctor {
     public static void deleteDoctor(int id) {
         doctors.removeIf(doctor -> doctor.getId() == id);
     }
+    
+        public static Doctors getSimplifiedDoctors(Doctors doctor) {
+        return new Doctors(
+                doctor.getId(),
+                doctor.getName(),
+                null,
+                null,
+                null,
+                null,
+                doctor.getSpecialization(),
+                null,
+                null,
+                null
+        );
+    }
 
-    public static List<Patients> getPatientsForDoctor(int doctorId) {
+    public static List<Patients> getPatientsForDoctor(int doctorId) { //Patient Doctor relationship
         List<Patients> patientsForDoctor = new ArrayList<>();
         for (Patients patient : DAOPatient.getAllPatients()) {
             for (Doctors doctor : patient.getDoctors()) {
                 if (doctor.getId() == doctorId) {
                     
-                    Patients simplifiedPatient = new Patients(
+                    Patients simplifiedPatient = new Patients( //summarised/simplified patient details since its not the suject of the request
                             patient.getId(),
                             patient.getName(),
                             null,

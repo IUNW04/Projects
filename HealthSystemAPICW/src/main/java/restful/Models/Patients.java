@@ -15,7 +15,7 @@ public class Patients extends Persons {
     private String bloodType;
     private List<Doctors> doctors;
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
+
      public Patients() {
          
     }

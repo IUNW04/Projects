@@ -1,9 +1,12 @@
+restful/Models/Appointment.class
+restful/DAOS/DAODoctor.class
+restful/Resources/PatientRestService.class
+restful/Models/Patients.class
+restful/DAOS/DAOPatient.class
 restful/Models/Doctors.class
 restful/Resources/DoctorRestService.class
 restful/Models/Persons.class
-restful/DAOS/DAODoctor.class
-restful/Resources/PatientRestService.class
+restful/Resources/AppointmentRestService.class
+restful/DAOS/DAOAppointment.class
 restful/Models/IDoctor.class
-restful/Models/Patients.class
-restful/DAOS/DAOPatient.class
 restful/Models/IPatient.class

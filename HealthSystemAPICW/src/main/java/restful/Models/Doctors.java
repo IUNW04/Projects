@@ -4,7 +4,7 @@ package restful.Models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
-//so that "null" isnt shown in json output when i simplify details 
+//so that "null" isnt shown in json output when i simplify patirnt details for doctor and vice versa
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "id", "name", "age", "gender", "contactInformation", "address", "specialization", "languages", "experience", "patients" })
 //Having to set he order manually because for some reason specialization and languages come after the doctors patients in the json output

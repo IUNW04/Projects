@@ -12,9 +12,9 @@ public class DAOPatient {
 
     static {
         // Create doctors
-        Doctors doctor1 = new Doctors(101, "Dr. Jeremy",null, null, "07444434668", null, null, null, "Cardiology", null);
-        Doctors doctor2 = new Doctors(102, "Dr. Raami", null, null, "07886578902", null, null, null, "Dermatology", null);   
-        Doctors doctor3 = new Doctors(103, "Dr. Lilly", null,null, "07997571252", null, null, null, "Physiotherapy", null);
+        Doctors doctor1 = new Doctors(101, "Dr. Jeremy",null, null, "07444434668", null, "Cardiology", null, null, null);
+        Doctors doctor2 = new Doctors(102, "Dr. Raami", null, null, "07886578902", null,"Dermatology", null,  null, null);   
+        Doctors doctor3 = new Doctors(103, "Dr. Lilly", null,null, "07997571252", null,"Physiotherapy", null,  null, null);
         // Create patients and associate doctors
         patients.add(new Patients(1, "Mohammed Naahid","22","Male", "07456785667", "123 Elm St", "Allergic to peanuts", "Stable","O+", List.of(doctor1, doctor2)));
         patients.add(new Patients(2, "Zaahir Uddin", "20","Male","07409895691", "456 Oak St", "Asthma", "Improving", "O+", List.of(doctor2)));
@@ -51,5 +51,20 @@ public class DAOPatient {
 
     public static void deletePatient(int id) {
         patients.removeIf(patient -> patient.getId() == id);
+    }
+    
+        public static Patients getSimplifiedPatients(Patients patient) {
+        return new Patients(
+                patient.getId(),
+                patient.getName(),
+                null,
+                null,
+                patient.getContactInformation(),
+                null,
+                patient.getMedicalHistory(),
+                patient.getCurrentHealthStatus(),
+                null,
+                null
+        );
     }
 }
